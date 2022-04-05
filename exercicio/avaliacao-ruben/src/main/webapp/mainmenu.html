@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en">
+
+<head>
+  <meta http-equiv="content-type" content="application/xhtml+xml; charset=UTF-8" />
+  <title>Welcome friend</title>
+</head>
+
+<body>
+  <h1>Welcome friend</h1>
+
+  <table>
+    <tr>
+      <td colspan="2" style="font-weight:bold;">Actions</td>
+    </tr>
+  </table>
+  <button onclick="redirect()">List all users</button>
+  <button onclick="logout()">Logout</button>
+  <button onclick="modify()">Modify user data</button>
+  <button onclick="listToken()">Show token data</button>
+  <button onclick="deleteUser()">Delete user</button>
+  <button onclick="changePassword()">Change password</button>
+
+
+
+
+
+  <script>
+
+    function changePassword() {
+      window.location.href = "http://avaliacao-ruben.appspot.com/changepassword.html";
+    }
+
+    function deleteUser() {
+      var xmlHttpReq = new XMLHttpRequest();
+
+      if (xmlHttpReq) {
+        xmlHttpReq.onreadystatechange = function () {
+          if (xmlHttpReq.readyState === 4 && xmlHttpReq.status === 200) {
+
+            console.log(xmlHttpReq.responseText);
+
+            localStorage.clear();
+
+            alert("User deleted!")
+
+            window.location.href = "http://avaliacao-ruben.appspot.com/login.html";
+          }
+        }
+      }
+
+      xmlHttpReq.open("POST", "https://avaliacao-ruben.appspot.com/rest/delete/user");
+
+      xmlHttpReq.setRequestHeader("Content-Type", "application/json;charset=UTF-8");
+
+      xmlHttpReq.send(JSON.stringify({
+        username: new String(localStorage.getItem("username"))
+      }));
+
+    }
+
+    function listToken() {
+      window.location.href = "http://avaliacao-ruben.appspot.com/listtoken.html"
+    }
+
+    function modify() {
+      window.location.href = "http://avaliacao-ruben.appspot.com/modifydata.html"
+    }
+
+    function redirect() {
+      window.location.href = "http://avaliacao-ruben.appspot.com/listedUsers.html";
+    }
+
+    function logout() {
+
+      var xmlHttpReq = new XMLHttpRequest();
+
+      if (xmlHttpReq) {
+        xmlHttpReq.onreadystatechange = function () {
+          if (xmlHttpReq.readyState === 4 && xmlHttpReq.status === 200) {
+
+            console.log(xmlHttpReq.responseText);
+
+            localStorage.clear();
+
+            window.location.href = "http://avaliacao-ruben.appspot.com/login.html";
+          }
+        }
+      }
+
+      xmlHttpReq.open("POST", "https://avaliacao-ruben.appspot.com/rest/logout/op");
+
+      xmlHttpReq.setRequestHeader("Content-Type", "application/json;charset=UTF-8");
+
+      xmlHttpReq.send(JSON.stringify({
+        username: new String(localStorage.getItem("username"))
+      }));
+
+    }
+  </script>
+</body>
+
+</html>

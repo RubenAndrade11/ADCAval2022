@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en">
+  <head>
+    <meta http-equiv="content-type" content="application/xhtml+xml; charset=UTF-8" />
+    <title>Welcome</title>
+  </head>
+
+  <body>
+      <script>
+            var xmlHttpReq = new XMLHttpRequest();
+    
+            if (xmlHttpReq){
+                xmlHttpReq.onreadystatechange = function() {
+                    if (xmlHttpReq.readyState === 4 && xmlHttpReq.status === 200) {
+                       const obj = JSON.parse(xmlHttpReq.responseText);
+    
+                       console.log(xmlHttpReq.responseText);
+    
+                        for (let i = 0 ; i < obj.length ; i++){
+                        console.log(obj[i]);
+                        }
+                    }
+                }
+            }
+    
+            xmlHttpReq.open("POST", "https://avaliacao-ruben.appspot.com/rest/list/token");
+    
+            xmlHttpReq.setRequestHeader("Content-Type", "application/json;charset=UTF-8");
+
+            xmlHttpReq.send(JSON.stringify({
+                username: new String(localStorage.getItem("username"))
+            }));
+
+            xmlHttpReq.onload = ()=>{
+                document.write(xmlHttpReq.response);
+            }
+      </script>
+  </body>
+</html>

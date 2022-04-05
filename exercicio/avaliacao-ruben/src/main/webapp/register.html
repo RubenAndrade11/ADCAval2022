@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en">
+  <head>
+    <meta http-equiv="content-type" content="application/xhtml+xml; charset=UTF-8" />
+    <title>Register</title>
+  </head>
+
+  <body>
+    <h1>Register</h1>
+    <div>
+    	<form id="reg" action="sendData()">
+  			<label for="uname">Username:</label><br>
+  			<input type="text" id="uname" name="uname"><br>
+  			<label for="pword">Password:</label><br>
+  			<input type="password" id="pword" name="pword"><br>
+        <label for="name">Nome:</label><br>
+  			<input type="text" id="name" name="name"><br>
+        <label for="email">Email:</label><br>
+  			<input type="text" id="email" name="email"><br>
+        <label for="tfixo">Telefone fixo:</label><br>
+  			<input type="text" id="tfixo" name="tfixo" maxlength="9"><br>
+        <label for="tmovel">Telefone móvel:</label><br>
+  			<input type="text" id="tmovel" name="tmovel" maxlength="9"><br>
+        <label for="nif">NIF:</label><br>
+  			<input type="text" id="nif" name="nif" maxlength="9"><br>
+        <label for="morada">Morada:</label><br>
+  			<input type="text" id="morada" name="morada"><br>
+        <label for="privado">Privado</label>
+        <input type="radio" id="priv" name="privacy" value="priv"><br>
+        <label for="publico">Público</label>
+        <input type="radio" id="pub" name="privacy" value="pub"><br>
+        <br>
+        <input type="button" value="Register" onClick='sendRegister()'>
+      </form>
+
+      <script>
+      function sendRegister() {
+        
+        if(document.getElementById("uname").value == "") {
+          alert("Obrigatório preencher Username");
+          return;
+        }
+
+        if(document.getElementById("pword").value == "") {
+          alert("Obrigatório preencher Password");
+          return;
+        }
+
+        if(document.getElementById("name").value == "") {
+          alert("Obrigatório preencher Nome");
+          return;
+        }
+
+        if(document.getElementById("email").value == "") {
+          alert("Obrigatório preencher Email");
+          return;
+        }
+
+
+
+        var xmlHttpReq = new XMLHttpRequest();
+    
+        if (xmlHttpReq){
+            xmlHttpReq.onreadystatechange = function() {
+                if (xmlHttpReq.readyState === 4 && xmlHttpReq.status === 200) {
+                    const obj = JSON.parse(xmlHttpReq.responseText);
+    
+                    console.log(xmlHttpReq.responseText);
+    
+                    for (let i = 0 ; i < obj.length ; i++){
+                    console.log(obj[i]);
+                    }
+                    
+                    window.location.href = "http://avaliacao-ruben.appspot.com/login.html";
+                }
+               }
+        }
+    
+        xmlHttpReq.open("POST", "https://avaliacao-ruben.appspot.com/rest/register/user");
+    
+        xmlHttpReq.setRequestHeader("Content-Type", "application/json;charset=UTF-8");
+    
+        xmlHttpReq.send(JSON.stringify({
+            username: new String(document.getElementById("uname").value),
+            email: new String(document.getElementById("email").value),
+            name: new String(document.getElementById("name").value),
+            password: new String(document.getElementById("pword").value),
+            mobilephone: new String(document.getElementById("tmovel").value),
+            phone: new String(document.getElementById("tfixo").value),
+            address: new String(document.getElementById("morada").value),
+            nif: new String(document.getElementById("nif").value),
+            privacy: new String(document.getElementsByName("privacy").value)
+        }));
+    }
+    </script>
+
+    </div>
+  </body>
+</html>
