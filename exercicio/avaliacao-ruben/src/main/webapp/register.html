@@ -57,6 +57,19 @@
         }
 
 
+        var radios = document.getElementsByName("privacy");
+                var checked;
+
+                for (var i = 0; i < radios.length; i++) {
+                    if (radios[i].checked) {
+                        checked = radios[i].value;
+                        break;
+                    } else {
+                      checked = ""
+                    }
+                }
+
+
 
         var xmlHttpReq = new XMLHttpRequest();
     
@@ -89,7 +102,7 @@
             phone: new String(document.getElementById("tfixo").value),
             address: new String(document.getElementById("morada").value),
             nif: new String(document.getElementById("nif").value),
-            privacy: new String(document.getElementsByName("privacy").value)
+            privacy: new String(checked)
         }));
     }
     </script>
